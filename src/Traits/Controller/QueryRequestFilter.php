@@ -12,21 +12,26 @@ use Illuminate\Database\Eloquent\Builder;
  */
 trait QueryRequestFilter
 {
-    protected static $allow_where;
+    protected static $allow_operator;
 
     protected static $paginate;
 
     protected $filter_fields;
     protected $query;
     protected $request;
+    protected static $conditions;
     protected static $order_by;
+    protected static $closure_query;
 
     public static function bootQueryRequestFilter()
     {
-        $config            = app('config');
-        self::$allow_where = $config->get('api-assistant.allow_where', ['and', 'or', 'in', 'notIn',]);
-        self::$paginate    = $config->get('api-assistant.paginate', 15);
-        self::$order_by    = $config->get('api-assistant.order_by', 'orderBy');
+        $config = app('config');
+
+        self::$allow_operator = $config->get('api-assistant.allow_operator', ['and', 'or', 'in', 'notIn',]);
+        self::$paginate       = $config->get('api-assistant.paginate', 15);
+        self::$order_by       = $config->get('api-assistant.order_by', 'orderBy');
+        self::$conditions     = $config->get('api-assistant.conditions', ['where', 'orWhere', 'whereIn', 'whereNotIn']);
+        self::$closure_query  = $config->get('api-assistant.closure_query', 'closure');
     }
 
     /**
@@ -78,7 +83,7 @@ trait QueryRequestFilter
                 foreach ($condition as $value) {
                     if (in_array($value, $model_operators)) {
                         $operators[] = $value;
-                    } elseif (in_array($value, self::$allow_where)) {
+                    } elseif (in_array($value, self::$allow_operator)) {
                         $wheres[] = $this->conditionConversion($value);
                     } else {
                         if (!Arr::has($operators, $value_index)) {
@@ -219,16 +224,10 @@ trait QueryRequestFilter
         if (empty($where)) {
             return 'where';
         }
-        $replacements = [
-            'where',
-            'orWhere',
-            'whereIn',
-            'whereNotIn',
-        ];
 
         return preg_replace(array_map(function ($allow_where) {
             return $allow_where = "/{$allow_where}/";
-        }, self::$allow_where), $replacements, $where);
+        }, self::$allow_operator), self::$conditions, $where);
     }
 
     /**
@@ -238,9 +237,9 @@ trait QueryRequestFilter
     protected function init($model, Request $request)
     {
         $this->filter_fields = $this->queryFieldsFilter($model::FIELDS, $request->get('fields'));
-        $query               = $model::autoLoadRelation(explode(',', $request->get('fields')));
+        $query               = $model::autoLoadRelation(explode(',', $request->get('fields', ['*'])));
         $this->query         = $this
-            ->closureConditionQuery($model::FIELDS, $request->query('closures', []), $query)
+            ->closureConditionQuery($model::FIELDS, $request->query(self::$closure_query, []), $query)
             ->queryConditionFilter($model::FIELDS, $request->query(), $query);
         $this->request       = $request;
     }

@@ -9,6 +9,7 @@ use App\Api\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class ApiExceptionReport
 {
@@ -24,7 +25,7 @@ class ApiExceptionReport
 
     protected $config;
 
-    public function __construct(Request $request, \Exception $exception)
+    public function __construct(Request $request, \Throwable $exception)
     {
         $this->config = app('config');
         $this->request   = $request;
@@ -55,10 +56,10 @@ class ApiExceptionReport
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @return static
      */
-    public static function make(\Exception $exception)
+    public static function make(\Throwable $exception)
     {
         return new static(app('request'), $exception);
     }
@@ -70,8 +71,12 @@ class ApiExceptionReport
     {
         list($message, $code) = Arr::flatten(Arr::divide(Arr::get(self::$CATCH_EXCEPTION, $this->report)));
 
+        if ($this->exception instanceof ValidationException) {
+            $message = $this->exception->errors();
+        }
+
         if (empty($message)) {
-            $message = $this->exception->getMessage();
+            $message = $this->config->get('api-assistant.default_exception_message', $this->exception->getMessage());
             app(ExceptionHandler::class)->report($this->exception);
         }
 

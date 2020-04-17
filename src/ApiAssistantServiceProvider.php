@@ -19,7 +19,7 @@ class ApiAssistantServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $configPath = __DIR__ . '/../config/ide-helper.php';
-        $this->mergeConfigFrom($configPath, 'ide-helper');
+        $configPath = __DIR__ . '/../config/api-assistant.php';
+        $this->mergeConfigFrom($configPath, 'api-assistant');
     }
 }

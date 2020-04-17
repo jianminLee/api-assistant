@@ -2,6 +2,7 @@
     "name": "orzlee/api-assistant",
     "description": "Help you quickly rebuild laravel api application",
     "license": "MIT",
+    "version": "v0.0.2",
     "authors": [
         {
             "name": "orzlee",
@@ -9,10 +10,21 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "php": ">=7.0.0",
+        "laravel/framework": ">=5.5"
+    },
     "autoload": {
         "psr-4": {
             "Orzlee\\ApiAssistant\\": "src/"
         }
-    },,
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orzlee\\ApiAssistant\\ApiAssistantServiceProvider"
+            ]
+
+        }
+    }
 }
