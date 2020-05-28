@@ -23,7 +23,7 @@ trait QueryRequestFilter
     protected static $order_by;
     protected static $closure_query;
 
-    public static function bootQueryRequestFilter()
+    protected function bootQueryRequestFilter()
     {
         $config = app('config');
 
@@ -236,8 +236,9 @@ trait QueryRequestFilter
      */
     protected function init($model, Request $request)
     {
+        $this->bootQueryRequestFilter();
         $this->filter_fields = $this->queryFieldsFilter($model::FIELDS, $request->get('fields'));
-        $query               = $model::autoLoadRelation(explode(',', $request->get('fields', ['*'])));
+        $query               = $model::autoLoadRelation(explode(',', $request->get('fields', '*')));
         $this->query         = $this
             ->closureConditionQuery($model::FIELDS, $request->query(self::$closure_query, []), $query)
             ->queryConditionFilter($model::FIELDS, $request->query(), $query);
