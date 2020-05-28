@@ -5,7 +5,7 @@ namespace Orzlee\ApiAssistant\Exceptions;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Api\Traits\ApiResponse;
+use Orzlee\ApiAssistant\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Debug\ExceptionHandler;
