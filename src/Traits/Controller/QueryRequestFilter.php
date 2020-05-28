@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Traits\Controller;
+namespace  Orzlee\ApiAssistant\Traits\Controller;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;

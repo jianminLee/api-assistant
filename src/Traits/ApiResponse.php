@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Traits;
+namespace  Orzlee\ApiAssistant\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

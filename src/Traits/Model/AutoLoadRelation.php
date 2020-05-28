@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Model;
+namespace  Orzlee\ApiAssistant\Traits\Model;
 
 use Illuminate\Database\Eloquent\Builder;
 
