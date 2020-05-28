@@ -1,14 +1,5 @@
 ### Installation
 
-首先解压ZIP文件包，在项目中创建目录`api-assistant`,将以下代码添加至`composer.json`中:
-```json
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./packages/orzlee/api-assistant"
-        }
-    ]
-```
 安装包:
 ```shell script
 composer require orzlee/api-assistant
