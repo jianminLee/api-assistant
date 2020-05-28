@@ -5,6 +5,11 @@
 composer require orzlee/api-assistant
 ```
 
+发布配置文件
+```
+php artisan vendor:publish --provider="Orzlee\ApiAssistant\ApiAssistantServiceProvider"
+```
+
 ### Configurations
 
 修改`app\Exceptions\Handler.php`以接管API异常处理:
