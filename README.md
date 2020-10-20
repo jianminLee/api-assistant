@@ -28,8 +28,8 @@ php artisan vendor:publish --provider="Orzlee\ApiAssistant\ApiAssistantServicePr
 修改控制器文件
 
 ```php
-use App\Api\Traits\ApiResponse;
-use App\Api\Traits\Controller\QueryRequestFilter;
+use Orzlee\ApiAssistant\Traits\ApiResponse;
+use Orzlee\ApiAssistant\Traits\Controller\QueryRequestFilter;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -39,7 +39,7 @@ class Controller extends BaseController
 ```
 修改模型文件
 ```php
-use App\Traits\Model\AutoLoadRelation;
+use Orzlee\ApiAssistant\Traits\Model\AutoLoadRelation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
