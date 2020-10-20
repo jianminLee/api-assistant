@@ -77,7 +77,7 @@ class ApiExceptionReport
 
         if (empty($message)) {
             $message = $this->config->get('api-assistant.default_exception_message', $this->exception->getMessage());
-            app(ExceptionHandler::class)->report($this->exception);
+            \Flare::report($this->exception);
         }
 
         return $this->failed($message, $code);
