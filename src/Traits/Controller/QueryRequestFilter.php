@@ -43,7 +43,7 @@ trait QueryRequestFilter
     protected function queryFieldsFilter(array $fields, $filter, string $delimiter = ','): array
     {
         return empty($filter) || (is_string($filter) && strpos($filter, '*') !== false)
-            ? ['*']
+            ? $fields
             : array_intersect($fields, (is_string($filter) ? explode($delimiter, $filter) : $filter));
     }
 
