@@ -2,7 +2,6 @@
     "name": "orzlee/api-assistant",
     "description": "Help you quickly rebuild laravel api application",
     "license": "MIT",
-    "version": "v1.0.0",
     "authors": [
         {
             "name": "orzlee",
