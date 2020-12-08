@@ -263,6 +263,6 @@ trait QueryRequestFilter
      */
     protected function paginate()
     {
-        return $this->query->paginate($this->fetchPaginateSize(), $this->filterFields);
+        return $this->query->simplePaginate($this->fetchPaginateSize(), $this->filterFields);
     }
 }
