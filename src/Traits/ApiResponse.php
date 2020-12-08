@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response as FoundationResponse;
 
 trait ApiResponse
 {
-    protected $status_code = FoundationResponse::HTTP_OK;
+    protected $statusCode = FoundationResponse::HTTP_OK;
 
 
     /**
@@ -35,7 +35,7 @@ trait ApiResponse
 
         $status = [
             'status' => $status,
-            'code'   => $this->status_code,
+            'code'   => $this->statusCode,
         ];
 
         return $data instanceof AnonymousResourceCollection
@@ -106,16 +106,16 @@ trait ApiResponse
      */
     protected function getStatusCode(): int
     {
-        return $this->status_code;
+        return $this->statusCode;
     }
 
     /**
-     * @param int $status_code
+     * @param int $statusCode
      * @return $this
      */
-    protected function setStatusCode(int $status_code)
+    protected function setStatusCode(int $statusCode)
     {
-        $this->status_code = $status_code;
+        $this->statusCode = $statusCode;
 
         return $this;
     }

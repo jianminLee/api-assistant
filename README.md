@@ -50,21 +50,28 @@ class User extends Authenticatable
      * 允许过滤查询的字段，条件字段会匹配该字段，自动过滤掉不包含字段
      * 条件过滤查询也会通过该字段过滤
      * api http://xxx.com/your-api-url?fields=name,created_at&name=test
+     * @return string[]
      */
-    const FIELDS = [
-        'name',
-        'avatar',
-        'created_at',
-    ];
+    public static function fields() :array
+    {
+        return [
+            'name',
+            'avatar',
+            'created_at',
+        ];
+    }
 
     /**
      * api url 参数中包含fields=my_post会自动加载关系
      * api http://xxx.com/your-api-url?fields=name,my_post
-     * @var array 
+     * @return string[]
      */
-    public static $RELATION_FIELDS = [
-        'posts' => 'my_post',
-    ];
+    public static function relationFields() :array
+    {
+        return [
+            'posts' => 'my_post',
+        ];
+    }
 
     public function posts()
     {

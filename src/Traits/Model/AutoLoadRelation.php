@@ -9,12 +9,13 @@ trait AutoLoadRelation
 
     public function scopeAutoLoadRelation(Builder $query, array $field = ['*'])
     {
-        if (isset(self::$RELATION_FIELDS) && count(self::$RELATION_FIELDS)) {
+        if (method_exists(self::class, 'relationFields')
+            && count($relationFields = self::relationFields())) {
             $query->with(
                 array_keys(
                     $field === ['*']
-                        ? array_diff(self::$RELATION_FIELDS, $field)
-                        : array_intersect(self::$RELATION_FIELDS, $field)
+                        ? array_diff($relationFields, $field)
+                        : array_intersect($relationFields, $field)
                 )
             );
         }
