@@ -10,9 +10,12 @@ trait HasCache
 {
     protected $ttl;
 
+    /**
+     * @return string
+     */
     protected function tag(): string
     {
-        return 'model_cache';
+        return config('api-assistant.model_cache_tag');
     }
 
     /**
@@ -43,17 +46,32 @@ trait HasCache
             );
     }
 
+    /**
+     * forget this model cache
+     *
+     * @param null $key
+     * @return bool
+     */
     public function forgetCache($key = null): bool
     {
         return Cache::tags($this->tag())->forget($key ?? get_class());
     }
 
+    /**
+     * set cache ttl
+     *
+     * @param $minutes
+     * @return $this
+     */
     public function setCacheTtl($minutes): HasCache
     {
         $this->ttl = $minutes;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getCacheTtl(): int
     {
         return $this->ttl ?: 60;

@@ -71,4 +71,9 @@ return [
      * 闭包查询字段名称
      */
     'closure_query' => 'closures',
+
+    /**
+     * 模型缓存TAG
+     */
+    'model_cache_tag' => 'model_cache',
 ];

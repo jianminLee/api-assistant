@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Trait QueryRequestFilter
  * @package App\Api\Traits\Controller
+ * @property \Illuminate\Database\Eloquent\Builder $query
  */
 trait QueryRequestFilter
 {
@@ -59,8 +60,7 @@ trait QueryRequestFilter
         array $conditions,
         Builder $model,
         string $delimiter = ','
-    ): Builder
-    {
+    ): Builder {
         if (empty($conditions)) {
             return $model;
         }
@@ -155,8 +155,7 @@ trait QueryRequestFilter
         array $wheres,
         array $values = [],
         array $operators = []
-    )
-    {
+    ) {
         $firstWhere = head($wheres);
         if (count($wheres) > 1 && in_array($firstWhere, ['where', 'orWhere'])) {
             $model->{$firstWhere}(function ($query) use ($wheres, $field, $values, $operators) {
@@ -184,8 +183,7 @@ trait QueryRequestFilter
         $value = null,
         $operator = '=',
         string $where = 'where'
-    )
-    {
+    ) {
         in_array($where, ['where', 'orWhere'])
             ? $model->{$where}($field, $operator, $value ?? null)
             : $model->{$where}($field, $value ?? null);
