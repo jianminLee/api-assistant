@@ -122,3 +122,49 @@ http://xxx.com/your-api-url?status[]=1,or,2&status
 //闭包查询，查询sql像这样： select * form post where (status = -1 or state = -2) and name = 'test' order by status;
 http://xxx.com/your-api-url?closures[][status]=or,-1&closures[][state]=or,-2&name=test&orderBy=status
 ```
+
+模型缓存:
+```php
+use \App\Traits\Model\HasCache;
+use \Illuminate\Database\Eloquent\Model;
+class Category extends Model
+{
+    use HasCache;
+    
+    /**
+     * 自定义缓存和key
+     * @return mixed
+     */
+    public static function getParentCategoryForCache()
+    {
+        return self::cache('parent_category', function (Category $model) {
+            return $model->where('parent_id', 0)->get();
+        });
+    }
+    /**
+     * 不传入key值，使用默认key，但是会替换cache函数缓存
+     * @return mixed
+     */
+    public static function getSubCategoryForCache()
+    {
+        return self::cache(function (Category $model) {
+            return $model->where('parent_id', '>', 0)->get();
+        });
+    }
+    
+}
+use Illuminate\Routing\Controller;
+use \Orzlee\ApiAssistant\Traits\ApiResponse;
+class CategoryController extends Controller
+{
+    use ApiResponse;
+    public function categories()
+    {
+        return $this->success(Category::cache());
+        //return $this->success(Category::getParentCategoryForCache());
+        //清理缓存
+        //(new Category)->forgetCache();
+        //(new Category)->forgetCache('parent_category');
+    }
+}
+```
