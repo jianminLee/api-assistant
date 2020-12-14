@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 return [
+    'exception_trans_path' => 'error',
     /**
      * 已知异常捕获返回json错误消息
      * 键是已知异常需要捕获的异常，值是一个数组，自定义返回的消息和错误状态码
