@@ -78,7 +78,7 @@ class ApiExceptionReport
         if (empty($message)) {
             $message = $this->config->get('api-assistant.default_exception_message', $this->exception->getMessage());
             app(ExceptionHandler::class)::report($this->exception);
-        } elseif ($path = $this->config->get('exception_trans_path')) {
+        } elseif ($path = $this->config->get('api-assistant.exception_trans_path')) {
             $message = __($path . '.' . $message);
         }
 
