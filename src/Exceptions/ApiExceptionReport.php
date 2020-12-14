@@ -5,11 +5,11 @@ namespace Orzlee\ApiAssistant\Exceptions;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Orzlee\ApiAssistant\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use Orzlee\ApiAssistant\Traits\ApiResponse;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 
 class ApiExceptionReport
 {
@@ -77,7 +77,7 @@ class ApiExceptionReport
 
         if (empty($message)) {
             $message = $this->config->get('api-assistant.default_exception_message', $this->exception->getMessage());
-            \Flare::report($this->exception);
+            app(ExceptionHandler::class)::report($this->exception);
         }
 
         return $this->failed($message, $code);
